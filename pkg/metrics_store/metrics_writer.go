@@ -103,9 +103,8 @@ func SanitizeHeaders(contentType string, writers MetricsWriterList) MetricsWrite
 				// These are expected to be consecutive since G** resolution generates groups of similar metrics with same headers before moving onto the next G** spec in the CRS configuration.
 				// Skip this step if we encounter a repeated header, as it will be removed.
 				if header != lastHeader && strings.HasPrefix(header, "# HELP") {
-
-					// If the requested content type was proto-based (such as FmtProtoDelim, FmtProtoText, or FmtProtoCompact), replace "info" and "statesets" with "gauge", as they are not recognized by Prometheus' protobuf machinery.
-					if strings.HasPrefix(contentType, expfmt.ProtoType) {
+					// If the requested content type was proto-based (such as FmtProtoDelim, FmtProtoText, or FmtProtoCompact) or text-based (FmtText), replace "info" and "statesets" with "gauge", as they are not recognized by Prometheus' protobuf machinery.
+					if strings.HasPrefix(contentType, expfmt.ProtoType) || expfmt.Format(contentType).FormatType() == expfmt.TypeTextPlain {
 						infoTypeString := string(metric.Info)
 						stateSetTypeString := string(metric.StateSet)
 						if strings.HasSuffix(header, infoTypeString) {

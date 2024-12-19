@@ -287,8 +287,6 @@ func TestSanitizeHeaders(t *testing.T) {
 			},
 			expectedHeaders: []string{
 				"# HELP foo foo_help\n# TYPE foo gauge",
-				"# HELP foo foo_help\n# TYPE foo info",
-				"# HELP foo foo_help\n# TYPE foo stateset",
 				"# HELP foo foo_help\n# TYPE foo counter",
 			},
 		},
@@ -310,8 +308,6 @@ func TestSanitizeHeaders(t *testing.T) {
 			},
 			expectedHeaders: []string{
 				"# HELP foo foo_help\n# TYPE foo gauge",
-				"# HELP foo foo_help\n# TYPE foo info",
-				"# HELP foo foo_help\n# TYPE foo stateset",
 				"# HELP foo foo_help\n# TYPE foo counter",
 			},
 		},
